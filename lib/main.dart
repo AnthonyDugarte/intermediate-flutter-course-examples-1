@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final String titleString = "Radio button";
+final String titleString = "Date Picker";
 
 void main() => runApp(MaterialApp(
       title: titleString,
@@ -23,41 +23,32 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _value = 0;
-  void _pickValue(int value) => setState(() => _value = value);
+  DateTime selectedDate;
+
+  Future<Null> _selectedDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(Duration(days: 30)),
+      lastDate: DateTime.now().add(Duration(days: 30)),
+    );
+
+    if (picked != null && picked != selectedDate)
+      setState(() => selectedDate = picked);
+  }
 
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(28.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text("Selecciona algo"),
-              Divider(
-                height: 16,
-                color: Colors.amber,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  ...(Iterable<int>.generate(3)
-                      .toList()
-                      .map((i) => ([
-                            Radio(
-                              value: i,
-                              onChanged: _pickValue,
-                              activeColor: Colors.amber,
-                              groupValue: _value,
-                            ),
-                            Text("Op ${i + 1}"),
-                          ]))
-                      .expand((p) => p)
-                      .toList()),
-                ],
-              )
-            ],
-          ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            RaisedButton(
+              child: Text("Pick a date"),
+              onPressed: () => _selectedDate(context),
+            ),
+            Text("$selectedDate"),
+          ],
         ),
       );
 }
