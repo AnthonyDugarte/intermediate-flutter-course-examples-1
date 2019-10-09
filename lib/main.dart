@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final String titleString = "Date Picker";
+final String titleString = "Time Picker";
 
 void main() => runApp(MaterialApp(
       title: titleString,
@@ -23,18 +23,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  DateTime selectedDate;
+  TimeOfDay selectedTime;
 
-  Future<Null> _selectedDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+  Future<Null> _selectedTime(BuildContext context) async {
+    final TimeOfDay picked = await showTimePicker(
       context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 30)),
-      lastDate: DateTime.now().add(Duration(days: 30)),
+      initialTime: TimeOfDay.now(),
     );
 
-    if (picked != null && picked != selectedDate)
-      setState(() => selectedDate = picked);
+    if (picked != null && picked != selectedTime)
+      setState(() => selectedTime = picked);
   }
 
   @override
@@ -45,9 +43,9 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             RaisedButton(
               child: Text("Pick a date"),
-              onPressed: () => _selectedDate(context),
+              onPressed: () => _selectedTime(context),
             ),
-            Text("$selectedDate"),
+            Text("$selectedTime"),
           ],
         ),
       );
