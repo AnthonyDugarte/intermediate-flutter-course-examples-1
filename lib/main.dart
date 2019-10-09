@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final String titleString = "Switch";
+final String titleString = "Radio button";
 
 void main() => runApp(MaterialApp(
       title: titleString,
@@ -23,26 +23,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool _value = false;
-  _triggerValue(bool value) => setState(() => _value = value);
+  int _value = 0;
+  _pickValue(int value) => setState(() => _value = value);
 
   @override
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.all(28.0),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text("Quieres este elemento?"),
-              Switch(
-                value: _value,
-                onChanged: _triggerValue,
-                activeColor: Colors.blueGrey,
-                inactiveTrackColor: Colors.amber,
+              Text("Selecciona algo"),
+              Divider(
+                height: 16,
+                color: Colors.amber,
               ),
-              RaisedButton(
-                child: Text("Hehe"),
-                onPressed: () => debugPrint("$_value"),
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Radio(
+                    value: 0,
+                    onChanged: _pickValue,
+                    activeColor: Colors.amber,
+                    groupValue: _value,
+                  ),
+                  Text("Op 1"),
+                  Radio(
+                    value: 1,
+                    onChanged: _pickValue,
+                    activeColor: Colors.amber,
+                    groupValue: _value,
+                  ),
+                  Text("Op 2"),
+                  Radio(
+                    value: 2,
+                    onChanged: _pickValue,
+                    activeColor: Colors.amber,
+                    groupValue: _value,
+                  ),
+                  Text("Op 3")
+                ],
+              )
             ],
           ),
         ),
