@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int _value = 0;
-  _pickValue(int value) => setState(() => _value = value);
+  void _pickValue(int value) => setState(() => _value = value);
 
   @override
   Widget build(BuildContext context) => Container(
@@ -41,27 +41,19 @@ class _MyAppState extends State<MyApp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Radio(
-                    value: 0,
-                    onChanged: _pickValue,
-                    activeColor: Colors.amber,
-                    groupValue: _value,
-                  ),
-                  Text("Op 1"),
-                  Radio(
-                    value: 1,
-                    onChanged: _pickValue,
-                    activeColor: Colors.amber,
-                    groupValue: _value,
-                  ),
-                  Text("Op 2"),
-                  Radio(
-                    value: 2,
-                    onChanged: _pickValue,
-                    activeColor: Colors.amber,
-                    groupValue: _value,
-                  ),
-                  Text("Op 3")
+                  ...(Iterable<int>.generate(3)
+                      .toList()
+                      .map((i) => ([
+                            Radio(
+                              value: i,
+                              onChanged: _pickValue,
+                              activeColor: Colors.amber,
+                              groupValue: _value,
+                            ),
+                            Text("Op ${i + 1}"),
+                          ]))
+                      .expand((p) => p)
+                      .toList()),
                 ],
               )
             ],
