@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import "./second.dart";
 
 final String titleString = "Time Picker";
 
-void main() => runApp(MaterialApp(
-      title: titleString,
-      home: MyAppLayout(),
-    ));
+void main() => runApp(
+      MaterialApp(
+        title: titleString,
+        home: MyAppLayout(),
+        routes: <String, WidgetBuilder>{
+          "/a": (BuildContext context) => Second()
+        },
+      ),
+    );
 
 class MyAppLayout extends StatelessWidget {
   @override
@@ -35,7 +41,10 @@ class MyAppLayout extends StatelessWidget {
               ),
               ListTile(
                 title: Text("Opción 1"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, "/a");
+                },
                 trailing: Icon(Icons.brightness_2),
               ),
               ListTile(
