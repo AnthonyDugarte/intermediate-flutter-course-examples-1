@@ -23,30 +23,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  TimeOfDay selectedTime;
+  double _val = 0.0;
 
-  Future<Null> _selectedTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (picked != null && picked != selectedTime)
-      setState(() => selectedTime = picked);
-  }
+  void _setVal(double val) => setState(() => _val = val);
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: EdgeInsets.all(28.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            RaisedButton(
-              child: Text("Pick a date"),
-              onPressed: () => _selectedTime(context),
-            ),
-            Text("$selectedTime"),
-          ],
+        padding: EdgeInsets.all(28),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              Slider(
+                value: _val,
+                onChanged: _setVal,
+              ),
+              Text("${(_val * 100).round()}"),
+            ],
+          ),
         ),
       );
 }
